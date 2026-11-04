@@ -1,0 +1,12 @@
+# A pool job named by its labels, as MAWS's own gate.yml places them (gate-plan.mjs poolBox): a public repo's
+# pool access comes from its allow_public entry in ci-kit's gce.json, not from ci-kit's generated gates.yml.
+name: pool
+on: workflow_dispatch
+jobs:
+  pool:
+    runs-on: [self-hosted, ci-kit-pool, cpus-2]
+    timeout-minutes: 15
+    steps:
+      - run: |
+          echo "repo=$GITHUB_REPOSITORY runner=$RUNNER_NAME nproc=$(nproc)"
+          command -v hello && hello || echo "hello not on the image"
